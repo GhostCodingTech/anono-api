@@ -6,7 +6,7 @@ export async function GET(request: any) {
   const { searchParams } = new URL(request.url);
   const channelName = searchParams.get('channelName');
   const uidString = searchParams.get('uid');
-  
+
   // Validate the request
   if (!channelName || !uidString) {
     return NextResponse.json({ error: 'channelName and uid are required' }, { status: 400 });
@@ -43,7 +43,8 @@ export async function GET(request: any) {
       privilegeExpiredTs
     );
 
-    return NextResponse.json({ token }, { status: 200 });
+    // Return appId and token in the response
+    return NextResponse.json({ appId, token }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to generate token' }, { status: 500 });
   }
